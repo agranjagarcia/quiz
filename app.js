@@ -45,7 +45,7 @@ app.use(function(req, res, next) {
 app.use(function(req, res, next){
     if(req.session.user){
         var now = new Date().getTime();
-        if (now - req.session.user.time < 60000){
+        if (now - req.session.user.time < 120000){
             req.session.user.time = now;
         } else {
             sessionController.destroy(req, res);
