@@ -8,7 +8,7 @@ var partials = require('express-partials');
 var methodOverride = require('method-override');
 var session = require('express-session');
 var sessionController = require('./controllers/session_controller');
-var https = require('https')
+var https = require('https');
 
 var routes = require('./routes/index');
 
