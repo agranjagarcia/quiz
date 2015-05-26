@@ -13,3 +13,5 @@ section              { height: 300px;}
 
 #ErrorMsgs           { color: #f61; font-size: smaler;}
 .right 				       {float: right;}
+
+.quiz_img            {heigth: 150px; float: left;}

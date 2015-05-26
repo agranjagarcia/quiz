@@ -7,3 +7,4 @@ body                                 { font-size: xx-large; }
 input, button, section               { font-size: x-large; }
 footer                               { font-size: large; }
 section                              { height: 300px; }
+.quiz_img                            { float: none; }
