@@ -52,7 +52,7 @@ exports.Quiz = Quiz; // exportar tabla Quiz
 exports.Comment = Comment; //exportar tabla Comment
 exports.User = User; //exportar tabla User
 
-// sequelize.sync() inicializa tabla de preguntas en DB
+// sequelize.sync() construye o sincroniza la DB segun define el modelo
 sequelize.sync().then(function() {
   // then(..) ejecuta el manejador una vez creada la tabla
   User.count().then(function (count){
