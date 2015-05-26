@@ -32,10 +32,16 @@ exports.load = function(req, res, next, quizId) {
 };
 
 // GET /quizes
+// GET /users/:userId/quizes
 exports.index = function(req, res) {
     var s = req.query.search || '';
     var aBuscar = "%" + s.replace(/ /g,"%") + "%";
-    models.Quiz.findAll({ where:["pregunta like ?", aBuscar], order:["pregunta"]}).then(
+    var options = {};
+    if(req.user){
+      options.where = {UserId: req.user.id}
+    }
+
+    models.Quiz.findAll({ where:["pregunta like ?", aBuscar], order:["pregunta"]}).then(  //no del todo seguro findAll(options)
       function(quizes) {
         res.render('quizes/index.ejs', { quizes: quizes, errors: [] });
       }
