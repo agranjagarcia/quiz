@@ -33,7 +33,7 @@ exports.load = function(req, res, next, quizId) {
 
 // GET /quizes
 // GET /users/:userId/quizes
-exports.index = function(req, res) {
+exports.index = function(req, res, next) {
     var s = req.query.search || '';
     var aBuscar = "%" + s.replace(/ /g,"%") + "%";
     var options = {};
@@ -41,8 +41,16 @@ exports.index = function(req, res) {
       options.where = {UserId: req.user.id}
     }
 
-    models.Quiz.findAll({ where:["pregunta like ?", aBuscar], order:["pregunta"]}).then(  //no del todo seguro findAll(options)
+    //models.Quiz.findAll({ where: Sequelize.and(["pregunta like ?", aBuscar], options.where), order: Sequelize.and(["pregunta"], options.where)}).then(
+    models.Quiz.findAll({ where:["pregunta like ?", aBuscar], order:["pregunta"], include: [{model: models.User, as :'Favourites'}]}).then(  //no del todo seguro findAll(options)
       function(quizes) {
+        if (req.session.user){
+           quizes.forEach(function(quiz){
+               quiz.isFav = quiz.Favourites.some(function(usuario){
+                   return (usuario.id = req.session.user.id);
+               });
+           });
+        }
         res.render('quizes/index.ejs', { quizes: quizes, errors: [] });
       }
     ).catch(function(error){next(error)});
